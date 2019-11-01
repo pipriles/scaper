@@ -1,7 +1,7 @@
 import React from 'react';
 import './SidePanel.css';
 
-function SelectionItem(props) {
+function SelectorItem(props) {
 
   let classNames = "Selection";
   if (props.isSelected) 
@@ -10,10 +10,10 @@ function SelectionItem(props) {
   return (
     <button 
       className={ classNames }
-      onFocus={() => props.onSelect(props.label)}>
+      onFocus={() => props.onSelect(props.id)}>
       { props.label }
     </button>
   );
 }
 
-export default SelectionItem;
+export default SelectorItem;

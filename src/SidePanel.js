@@ -1,16 +1,10 @@
 import React, { useState }  from 'react';
-import SelectionItem from './SelectionItem';
-import './SidePanel.css'
+import SelectorItem from './SelectorItem';
+import './SidePanel.css';
+
+import { connect } from 'react-redux';
 
 /* Add unselect target functionality */
-const LABELS = [
-  "Selection 1",
-  "Selection 2",
-  "Selection 3",
-  "Selection 4",
-  "Selection 5"
-];
-
 function randomString(length) {
   var result = [];
   var c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -22,56 +16,70 @@ function randomString(length) {
   return result.join('');
 }
 
-function SidePanel(props) {
+const mapStateToProps = (state) => {
+  return { selectors: state.selectors }
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addSelector: () => {
+      console.log('Add random label');
+      let str = randomString(10);
+      let payload = { id: str, label: str }; 
+      dispatch({ type: 'ADD_SELECTOR', payload });
+    },
+    updateSelector: (payload) => {
+      console.log('Edit selected label', payload);
+      dispatch({ type: 'UPDATE_SELECTOR', payload });
+    },
+    removeSelector: (id) => {
+      console.log(id);
+      dispatch({ type: 'REMOVE_SELECTOR', payload: { id } });
+    }
+  }
+};
 
-  const [ labels, setLabels ] = useState(LABELS);
+function SidePanel({ 
+  selectors, 
+  addSelector,
+  updateSelector,
+  removeSelector
+}) {
   const [ selected, setSelected ] = useState(null);
 
-  const selectHandler = (label) => {
-    setSelected(label);
+  const selectHandler = (id) => {
+    setSelected(id);
   };
-
-  const addLabel = () => {
-    console.log('Add random label');
-    let label = randomString(10);
-    setLabels([ ...labels, label ]);
-    console.log(labels);
-  };
-
-  const editLabel = () => {
-    console.log('Edit selected label', selected);
-  };
-
-  const removeLabel = () => {
-    console.log('Remove selected label', selected);
-    let filtered = labels.filter(l => l !== selected)
-    setLabels(filtered);
-    setSelected(filtered[filtered.length-1]);
-  }
 
   return (
     <div className="SidePanel"> 
       <div className="Selection-wrapper">
-        { 
-          labels.map((l) => 
-            <SelectionItem 
-              key={l} 
-              label={l} 
-              isSelected={ selected === l }
-              onSelect={selectHandler}/>
-          ) 
-        }
+      { 
+        selectors.map((s, index) => 
+          <SelectorItem 
+            key={index} 
+            isSelected={ selected === s.id }
+            {...s}
+            onSelect={selectHandler}/>
+        ) 
+      }
       </div>
       <div>
         <hr/>
         <div className="SidePanel-icons-section">
-          <button className="SidePanel-icon" onClick={addLabel}>
+          <button 
+            className="SidePanel-icon" 
+            onClick={() => addSelector()}>
             <i className="fa fa-plus fa-lg"></i>
           </button>
-          <button className="SidePanel-icon" onClick={editLabel}>
+          <button 
+            // trigger action to display a ui that will update selector
+            className="SidePanel-icon" 
+            onClick={() => updateSelector(selected)}>
             <i className="fa fa-edit fa-lg"></i>
           </button>
-          <button className="SidePanel-icon" onClick={removeLabel}>
+          <button 
+            className="SidePanel-icon" 
+            onClick={() => removeSelector(selected)}>
             <i className="fa fa-trash fa-lg"></i>
           </button>
         </div>
@@ -80,4 +88,4 @@ function SidePanel(props) {
   );
 }
 
-export default SidePanel;
+export default connect(mapStateToProps, mapDispatchToProps)(SidePanel);

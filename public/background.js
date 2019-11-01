@@ -1,13 +1,3 @@
-
-function sendMessage(tab) {
-    let opts = { active: true, currentWindow: true}
-    chrome.tabs.query(opts, (tabs) => {
-        let activeTab = tabs[0];
-        let payload = { "message": "clicked_browser_action"};
-        chrome.tabs.sendMessage(activeTab.id, payload);
-    })
-}
-
 function onResponse(request, sender, sendResponse) {
     if ( request.message === "open_new_tab" ) {
         chrome.tabs.create({ "url": request.url });

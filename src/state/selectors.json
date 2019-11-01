@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "label": "Selector 1",
+    "query": "",
+    "queryType": "CSS",
+    "extractionType": "GET_TEXT",
+    "parameters": {
+      "stripText": true,
+      "elementIndex": null
+    }
+  },
+  {
+    "id": 2,
+    "label": "Selector 2",
+    "query": "",
+    "queryType": "CSS",
+    "extractionType": "GET_TEXT",
+    "parameters": {
+      "stripText": true,
+      "elementIndex": null
+    }
+  },
+  {
+    "id": 3,
+    "label": "Selector 3",
+    "query": "",
+    "queryType": "CSS",
+    "extractionType": "GET_TEXT",
+    "parameters": {
+      "stripText": true,
+      "elementIndex": null
+    }
+  },
+  {
+    "id": 4,
+    "label": "Selector 4",
+    "query": "",
+    "queryType": "CSS",
+    "extractionType": "GET_TEXT",
+    "parameters": {
+      "stripText": true,
+      "elementIndex": null
+    }
+  }
+]

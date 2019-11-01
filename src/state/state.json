@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Recipe 1",
+    "executionSpeed": 1000,
+    "importParameters": {},
+    "exportParameters": {},
+    "commands": [
+      {
+        "commandId": "EXTRACT_DATA",
+        "parameters": {
+          "fields": [
+            {
+              "fieldKey": "FullName",
+              "fieldKeyType": "STRING",
+              "fieldValue": "Selector 1",
+              "fieldValueType": "SELECTOR"
+            },
+            {
+              "fieldKey": "Selector 3",
+              "fieldKeyType": "SELECTOR",
+              "fieldValue": "Selector 2",
+              "fieldValueType": "SELECTOR"
+            }
+          ]
+        }
+      },
+      {
+        "commandId": "CLICK",
+        "parameters": {
+          "query": "",
+          "queryType": "CSS",
+          "elementIndex": null
+        }
+      }
+    ],
+    "selectors": [
+      {
+        "id": 1,
+        "label": "Selector 1",
+        "query": "",
+        "queryType": "CSS",
+        "extractionType": "GET_TEXT",
+        "parameters": {
+          "stripText": true,
+          "elementIndex": null
+        }
+      }
+    ]
+  }
+]

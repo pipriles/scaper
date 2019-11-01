@@ -1,0 +1,29 @@
+Recipes
+---
+```json
+{
+  "name": ...,
+  "executionSpeed": 1000,
+  "importParameters": { 
+    ... 
+  },
+  "exportParameters": {
+    ...
+  },
+  "commands": [
+    {
+      "fieldKey": "FullName",
+      "fieldKeyType": "STRING",
+      "fieldValue": "Selector 1",
+      "fieldValueType: "SELECTOR"
+    },
+    {
+      "fieldKey": "Selector 3",
+      "fieldKeyType": "SELECTOR",
+      "fieldValue": "Selector 2",
+      "fieldValueType: "SELECTOR"
+    },
+    ...
+  ]
+
+```
