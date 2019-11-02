@@ -1,7 +1,9 @@
-/*global chrome*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
 import store from './store.js';
 import App from './App';
 
@@ -10,17 +12,21 @@ import './index.css';
 
 import * as serviceWorker from './serviceWorker';
 
-const filterTypes = { windowTypes: ["normal"] }
-const focusWindow = (id) => {
-  if ( id <= 0 ) return;
-  store.dispatch({ type: 'FOCUS_WINDOW', payload: id });
-}
+const theme = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary:   { main: "#1e2127" },
+    secondary: { main: "#282c34" }
+  },
+})
 
-chrome.windows.onFocusChanged.addListener(focusWindow, filterTypes);
+console.log(theme);
 
 ReactDOM.render(
   <Provider store={ store }>
-    <App />
+    <ThemeProvider theme={ theme }>
+      <App />
+    </ThemeProvider>
   </Provider>, 
   document.getElementById('root'));
 

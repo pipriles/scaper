@@ -3,9 +3,9 @@ import SELECTORS from './state/selectors.json';
 import COMMANDS from './state/commands.json';
 import { createStore, combineReducers } from 'redux';
 
-const focusedWindow = (state = 0, action) => {
+const activeTab = (state = null, action) => {
   switch(action.type) {
-    case 'FOCUS_WINDOW':
+    case 'CHANGE_TAB':
       return action.payload;
     default:
       return state;
@@ -33,7 +33,7 @@ const commands = (state = COMMANDS, action) => {
 };
 
 const reducer = combineReducers({
-  focusedWindow,
+  activeTab,
   selectors,
   commands
 });

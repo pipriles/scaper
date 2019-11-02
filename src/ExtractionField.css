@@ -1,0 +1,21 @@
+.ExtractionField-container {
+  display: flex;
+}
+
+.ExtractionField-container + * {
+  margin-top: 2px;
+}
+
+.ExtractionField-column {
+  width: 50%;
+}
+
+.ExtractionField-column + * {
+  margin-left: 2px;
+}
+
+.ExtractionField-input {
+  background-color: #282c34;
+  width: 100%;
+  padding: 6px 15px;
+}

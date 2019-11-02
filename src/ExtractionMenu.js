@@ -1,46 +1,55 @@
-/*global chrome*/
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import browser from './browser-proxy';
 import store from './store'; 
+import ExtractionField from './ExtractionField';
 
 import './ExtractionMenu.css';
-import logo from './logo.svg';
+
+const extractData = async (setUrl) => {
+  let { activeTab } = store.getState();
+  let resp = await sendMessageActiveTab(activeTab);
+  if (resp) setUrl(resp.url);
+};
+
+const sendMessageActiveTab = async (tab) => {
+  if ( !tab ) return 
+  const payload = 'OK';
+  let resp = await browser.tabs.sendMessage(
+      tab.id, { payload }
+  );
+  return resp
+}
+
+const mapStateToProps = (state) => {
+  // for now just take first command
+  let [ command ] = state.commands;
+  console.log(command);
+  return command.parameters;
+};
 
 function ExtractionMenu(props) {
-  let [ url, setUrl ] = useState('');
 
-  const extractData = () => {
-    let { focusedWindow } = store.getState()
-    sendMessageActiveTab(focusedWindow);
-  };
-
-  const sendMessageActiveTab = (windowId) => {
-    const payload = 'OK';
-    const options = { active: true, url: '*://*/*', windowId }    
-    console.log(options)
-    chrome.tabs.query(options, (tabs) => { 
-        console.log(tabs)
-        if (tabs.length <= 0) return
-        chrome.tabs.sendMessage(tabs[0].id, { payload }, (resp) => { 
-            console.log(resp) 
-            setUrl(resp.url) // oops
-        });
-      });
-  }
+  const { fields } = props;
+  const [ url, setUrl ] = useState('');
 
   return (
     <div className="ExtractionMenu">
       <div className="ExtractionMenu-block">
-        <img src={logo} className="ExtractionMenu-logo" alt="logo" />
-        {
-          ( !url ) 
-          ? ( <p> Edit <code>src/App.js</code> and save to reload. </p>)
-          : ( <p>{ url }</p> )
-        }
+        { url && ( <p>{ url }</p> ) }
+        { fields.map( 
+          (field, index) => 
+            <ExtractionField 
+              key={ index } 
+              field={ field }
+            /> 
+        ) }
       </div>
       <div className="ExtractionMenu-block">
         <button 
           className="ExtractionMenu-button"
-          onClick={ () => extractData() }>
+          onClick={ () => extractData(setUrl) }>
           Extract
         </button>
       </div>
@@ -48,5 +57,4 @@ function ExtractionMenu(props) {
   );
 }
 
-const wrapper = () => <ExtractionMenu />
-export default wrapper;
+export default connect(mapStateToProps, null)(ExtractionMenu);

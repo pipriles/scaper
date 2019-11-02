@@ -6,14 +6,12 @@
         {
           "fieldKey": "FullName",
           "fieldKeyType": "STRING",
-          "fieldValue": "Selector 1",
-          "fieldValueType": "SELECTOR"
+          "selectorId": 1
         },
         {
-          "fieldKey": "Selector 3",
+          "fieldKey": 3,
           "fieldKeyType": "SELECTOR",
-          "fieldValue": "Selector 2",
-          "fieldValueType": "SELECTOR"
+          "selectorId": 2
         }
       ]
     }
