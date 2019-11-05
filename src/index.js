@@ -16,11 +16,9 @@ const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary:   { main: "#1e2127" },
-    secondary: { main: "#282c34" }
+    secondary: { main: "#5a5a5a" }
   },
 })
-
-console.log(theme);
 
 ReactDOM.render(
   <Provider store={ store }>

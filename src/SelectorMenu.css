@@ -1,0 +1,33 @@
+.SelectorMenu { 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+  height: calc(100vh - 20px);
+  width: calc(100% - 20px);
+  background-color: #1e2127;
+}
+
+.SelectorMenu-content {
+  margin: 20px;
+}
+
+.SelectorMenu-content > div + div {
+  margin-top: 15px;
+}
+
+.SelectorMenu-input {
+  background-color: #282c34;
+  width: 100%;
+  padding: 6px 15px;
+}
+
+.SelectorMenu-form-control {
+  width: 50%;
+}
+
+.SelectorMenu-select > div{
+  padding: 12px 24px 13px 10px;
+}

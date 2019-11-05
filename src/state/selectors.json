@@ -15,7 +15,7 @@
     "label": "Selector 2",
     "query": "",
     "queryType": "CSS",
-    "extractionType": "GET_TEXT",
+    "extractionType": "GET_ATTRIBUTE",
     "parameters": {
       "stripText": true,
       "elementIndex": null

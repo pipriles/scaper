@@ -2,20 +2,16 @@ import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InputBase from '@material-ui/core/InputBase';
 import { connect } from 'react-redux';
+import { findSelector } from './selectors';
 
 import './ExtractionField.css';
-
-const findSelector = (state, id) => {
-  for ( let s of state.selectors ) 
-    if ( s.id === id ) return s;
-}
 
 const mapStateToProps = (state, ownProps) => {
   let { fieldKey, fieldKeyType, selectorId } = ownProps.field
 
   // i will need to normalize 
   // to make this fast
-  let keySelector, valueSelector;
+  let keySelector = fieldKey, valueSelector;
   if ( fieldKeyType === "SELECTOR" )
     keySelector = findSelector(state, fieldKey);
   valueSelector = findSelector(state, selectorId);
@@ -38,9 +34,13 @@ function ExtractionField({
   }
 
   const { fieldKeyType } = field;
-  const fieldKey = fieldKeyType !== "SELECTOR" 
-    ? field.fieldKey 
-    : keySelector.label;
+  let fieldKey = '';
+
+  if ( keySelector !== undefined ) {
+    fieldKey = fieldKeyType !== "SELECTOR" 
+      ? field.fieldKey 
+      : keySelector.label;
+  }
 
   return (
     <div className="ExtractionField-container">

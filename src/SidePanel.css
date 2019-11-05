@@ -37,7 +37,6 @@ hr {
   height: 1px;
   border: 0;
   border-top: 1px solid #282c34;
-  width: 80%;
 }
 
 .Selection-wrapper {
@@ -62,7 +61,7 @@ hr {
   border: none;
 }
 
-.Selection:focus, .Selection:hover {
+.Selection:hover {
   background-color: #1e2127;
   border: none;
   outline: none;

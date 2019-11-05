@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import SelectorItem from './SelectorItem';
 import './SidePanel.css';
 
@@ -27,10 +27,6 @@ const mapDispatchToProps = (dispatch) => {
       let payload = { id: str, label: str }; 
       dispatch({ type: 'ADD_SELECTOR', payload });
     },
-    updateSelector: (payload) => {
-      console.log('Edit selected label', payload);
-      dispatch({ type: 'UPDATE_SELECTOR', payload });
-    },
     removeSelector: (id) => {
       console.log(id);
       dispatch({ type: 'REMOVE_SELECTOR', payload: { id } });
@@ -40,15 +36,13 @@ const mapDispatchToProps = (dispatch) => {
 
 function SidePanel({ 
   selectors, 
+  selected,
+  onSelect,
   addSelector,
-  updateSelector,
   removeSelector
 }) {
-  const [ selected, setSelected ] = useState(null);
 
-  const selectHandler = (id) => {
-    setSelected(id);
-  };
+  const hrStyle = { width: "80%" };
 
   return (
     <div className="SidePanel"> 
@@ -58,24 +52,18 @@ function SidePanel({
           <SelectorItem 
             key={index} 
             isSelected={ selected === s.id }
-            {...s}
-            onSelect={selectHandler}/>
+            { ...s }
+            onSelect={onSelect}/>
         ) 
       }
       </div>
       <div>
-        <hr/>
+        <hr style={ hrStyle } />
         <div className="SidePanel-icons-section">
           <button 
             className="SidePanel-icon" 
             onClick={() => addSelector()}>
             <i className="fa fa-plus fa-lg"></i>
-          </button>
-          <button 
-            // trigger action to display a ui that will update selector
-            className="SidePanel-icon" 
-            onClick={() => updateSelector(selected)}>
-            <i className="fa fa-edit fa-lg"></i>
           </button>
           <button 
             className="SidePanel-icon" 

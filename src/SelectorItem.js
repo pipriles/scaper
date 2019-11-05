@@ -10,7 +10,7 @@ function SelectorItem(props) {
   return (
     <button 
       className={ classNames }
-      onFocus={() => props.onSelect(props.id)}>
+      onClick={() => props.onSelect(props.id)}>
       { props.label }
     </button>
   );

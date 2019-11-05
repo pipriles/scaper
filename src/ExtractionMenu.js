@@ -25,7 +25,6 @@ const sendMessageActiveTab = async (tab) => {
 const mapStateToProps = (state) => {
   // for now just take first command
   let [ command ] = state.commands;
-  console.log(command);
   return command.parameters;
 };
 
