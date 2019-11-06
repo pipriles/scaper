@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 function SelectorMenu(props) {
 
-  const selector = props.selector;
+  const { selector } = props;
 
   return (
     <div className="SelectorMenu"> 
@@ -95,6 +95,16 @@ function SelectorMenu(props) {
         />
 
       </div>
+
+      <div className="SelectorMenu-content">
+        <InputBase 
+          placeholder="Label" 
+          value={ selector.label }
+          onChange={ props.setLabel }
+          className="SelectorMenu-label-input"
+        />      
+      </div>
+
     </div>
   );
 }

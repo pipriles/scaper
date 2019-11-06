@@ -31,3 +31,8 @@
 .SelectorMenu-select > div{
   padding: 12px 24px 13px 10px;
 }
+
+.SelectorMenu-label-input {
+  font-size: 0.96em;
+  color: #bfbfbf;
+}

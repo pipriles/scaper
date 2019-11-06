@@ -27,11 +27,10 @@ function ExtractionField({
   field, 
   keySelector, 
   valueSelector, 
-  selectors = [] }) {
-
-  const onChange = (e, value) => {
-    console.log(value);
-  }
+  selectors = [],
+  onFieldKeyChange,
+  onFieldValueChange
+}) {
 
   const { fieldKeyType } = field;
   let fieldKey = '';
@@ -49,6 +48,7 @@ function ExtractionField({
           value={ fieldKey }
           placeholder="Field" 
           className="ExtractionField-input"
+          onChange={ onFieldKeyChange(field) }
         />
       </div>
       <div className="ExtractionField-column">
@@ -57,7 +57,7 @@ function ExtractionField({
           options={ selectors }
           getOptionLabel={ s => s.label } 
           clearOnEscape
-          onChange={ onChange }
+          onChange={ onFieldValueChange(field) }
           renderInput={ params => {
             return <InputBase 
               ref={params.ref}

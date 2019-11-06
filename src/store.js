@@ -2,6 +2,8 @@
 import SELECTORS from './state/selectors.json';
 import COMMANDS from './state/commands.json';
 import { createStore, combineReducers } from 'redux';
+import { createReducer } from 'redux-starter-kit';
+import uuidv4 from 'uuid/v4';
 
 const activeTab = (state = null, action) => {
   switch(action.type) {
@@ -12,11 +14,25 @@ const activeTab = (state = null, action) => {
   }
 }
 
+const defaultValue = {
+  "id": null,
+  "label": "New Selector",
+  "query": "",
+  "queryType": "CSS",
+  "extractionType": "GET_TEXT",
+  "parameters": {
+    "stripText": true,
+    "elementIndex": 0
+  }
+}
+
 const selectors = (state = SELECTORS, action) => {
   switch(action.type) {
     case 'ADD_SELECTOR':
-      // merge with default structure?
-      return [ ...state, action.payload ]
+      // generate random id
+      let newSelector = { ...defaultValue };
+      newSelector.id = uuidv4();
+      return [ ...state, newSelector ];
     case 'REMOVE_SELECTOR':
       return state.filter(s => s.id !== action.payload.id);
     case 'UPDATE_SELECTOR':
@@ -28,9 +44,16 @@ const selectors = (state = SELECTORS, action) => {
   }
 };
 
-const commands = (state = COMMANDS, action) => {
-  return state;
-};
+const commands = createReducer(COMMANDS, {
+  'UPDATE_FIELD': (state, action) => {
+    const command = state[action.commandId];
+    const fields = command.parameters.fields;
+    fields[action.fieldId] = { 
+      ...fields[action.fieldId], 
+      ...action.payload 
+    };
+  }
+});
 
 const reducer = combineReducers({
   activeTab,

@@ -4,32 +4,19 @@ import './SidePanel.css';
 
 import { connect } from 'react-redux';
 
-/* Add unselect target functionality */
-function randomString(length) {
-  var result = [];
-  var c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var l = c.length;
-  for (let i=0; i < length; i++) {
-    let x = c.charAt(Math.floor(Math.random() * l));
-    result.push(x)
-  }
-  return result.join('');
-}
-
 const mapStateToProps = (state) => {
   return { selectors: state.selectors }
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addSelector: () => {
       console.log('Add random label');
-      let str = randomString(10);
-      let payload = { id: str, label: str }; 
-      dispatch({ type: 'ADD_SELECTOR', payload });
+      dispatch({ type: 'ADD_SELECTOR' });
     },
     removeSelector: (id) => {
       console.log(id);
       dispatch({ type: 'REMOVE_SELECTOR', payload: { id } });
+      ownProps.onSelect(null);
     }
   }
 };
@@ -76,4 +63,8 @@ function SidePanel({
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SidePanel);
+export default connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)(SidePanel);
+
