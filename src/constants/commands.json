@@ -1,0 +1,18 @@
+{
+  "1": {
+    "id": "1",
+    "commandType": "EXTRACT_DATA",
+    "parameters": {
+      "fields": [ "1", "2" ]
+    }
+  },
+  "2": {
+    "id": "2",
+    "commandType": "CLICK",
+    "parameters": {
+      "query": "",
+      "queryType": "CSS",
+      "elementIndex": null
+    }
+  }
+}

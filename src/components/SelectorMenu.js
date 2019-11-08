@@ -7,25 +7,27 @@ import {
   Select,
   MenuItem,
 } from '@material-ui/core';
+
+import * as actions from '../actions';
+import { getSelector } from '../selectors';
 import SelectorParams from './SelectorParams';
-import { findSelector } from './selectors';
 
 import './SelectorMenu.css';
 
 const mapStateToProps = (state, ownProps) => {
   let id = ownProps.selectorId;
-  let selector = findSelector(state, id);
+  let selector = getSelector(state, id);
   return { selector };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 
   const dispatchPayload = (payload) => {
-    dispatch({ 
-      type: 'UPDATE_SELECTOR', 
-      id: ownProps.selectorId, 
-      payload 
+    const action = actions.updateSelector({ 
+      ...payload, 
+      id: ownProps.selectorId 
     });
+    dispatch(action);
   }
 
   const setQuery = (event) => {

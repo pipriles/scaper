@@ -17,7 +17,8 @@ if ( browser ) {
     store.dispatch({ type: 'CHANGE_TAB', payload: tab });
   }
 
-  browser.windows.onFocusChanged.addListener(focusWindow, filterTypes);
+  browser.windows.onFocusChanged.addListener(
+    focusWindow, filterTypes);
 }
 
 window.browser = browser;

@@ -1,6 +1,6 @@
-[
-  {
-    "id": 1,
+{
+  "1": {
+    "id": "1",
     "label": "Selector 1",
     "query": "",
     "queryType": "CSS",
@@ -10,8 +10,8 @@
       "elementIndex": null
     }
   },
-  {
-    "id": 2,
+  "2": {
+    "id": "2",
     "label": "Selector 2",
     "query": "",
     "queryType": "CSS",
@@ -21,8 +21,8 @@
       "elementIndex": null
     }
   },
-  {
-    "id": 3,
+  "3": {
+    "id": "3",
     "label": "Selector 3",
     "query": "",
     "queryType": "CSS",
@@ -32,8 +32,8 @@
       "elementIndex": null
     }
   },
-  {
-    "id": 4,
+  "4": {
+    "id": "4",
     "label": "Selector 4",
     "query": "",
     "queryType": "CSS",
@@ -43,4 +43,4 @@
       "elementIndex": null
     }
   }
-]
+}

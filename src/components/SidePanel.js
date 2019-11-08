@@ -3,19 +3,22 @@ import SelectorItem from './SelectorItem';
 import './SidePanel.css';
 
 import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 const mapStateToProps = (state) => {
-  return { selectors: state.selectors }
+  return { selectors: Object.values(state.selectors) }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addSelector: () => {
       console.log('Add random label');
-      dispatch({ type: 'ADD_SELECTOR' });
+      const action = actions.addSelector();
+      dispatch(action);
     },
     removeSelector: (id) => {
       console.log(id);
-      dispatch({ type: 'REMOVE_SELECTOR', payload: { id } });
+      const action = actions.removeSelector(id);
+      dispatch(action);
       ownProps.onSelect(null);
     }
   }
@@ -67,4 +70,3 @@ export default connect(
     mapStateToProps, 
     mapDispatchToProps
 )(SidePanel);
-

@@ -10,6 +10,15 @@
   background-color: #1e2127;
 }
 
+.ExtractionMenu-fields {
+  overflow: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.ExtractionMenu-add-button {
+  border-radius: 0px;
+}
+
 .ExtractionMenu-link {
   color: #09d3ac;
 }

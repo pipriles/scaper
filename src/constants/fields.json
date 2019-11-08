@@ -1,0 +1,14 @@
+{
+  "1": {
+    "id": "1",
+    "fieldKey": "Full Name",
+    "fieldKeyType": "STRING",
+    "selectorId": 1
+  },
+  "2": {
+    "id": "2",
+    "fieldKey": "Email",
+    "fieldKeyType": "STRING",
+    "selectorId": 2
+  }
+}
