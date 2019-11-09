@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -46,7 +46,6 @@ const mapDispatchToProps = (dispatch) => {
         fieldKey: event.target.value 
       };
       const action = actions.updateField(payload);
-      console.log(action);
       dispatch(action);
     },
     onFieldValueChange: (field) => (event, value) => {
@@ -63,24 +62,42 @@ const mapDispatchToProps = (dispatch) => {
     },
     onRemoveField: (command, id) => {
       const action = actions.removeField(command.id, id);
-      console.log(action);
       dispatch(action);
     }
   }
 };
 
+const getLastField = (fields) => {
+  const len = fields.length;
+  return len > 0 ? fields[len-1].id : null;
+}
+
 function ExtractionMenu(props) {
 
   const { command, fields } = props;
+
   const [ url, setUrl ] = useState('');
   const [ selected, setSelected ] = useState(null);
 
-  const onSelectField = (id) => setSelected(id);
+  useEffect(() => {
+    const field = getLastField(fields)
+    setSelected(field);
+  }, [fields]);
+
+  console.log(fields, selected);
+
+  const onSelectField = setSelected;
 
   const { onFieldKeyChange } = props;
   const { onFieldValueChange } = props;
-  const { onAddField } = props;
-  const { onRemoveField } = props;
+
+  const onAddField = () => {
+    props.onAddField(command);
+  };
+
+  const onRemoveField = () => {
+    props.onRemoveField(command, selected);
+  };
 
   // fetch selectors here
   // pass it to extraction field
@@ -111,7 +128,7 @@ function ExtractionMenu(props) {
             variant="outlined"
             fullWidth={ true }
             startIcon={ <AddIcon /> }
-            onClick={ () => onAddField(command) }
+            onClick={ onAddField }
             className="ExtractionMenu-add-button"
           >
             Add Field
@@ -120,10 +137,7 @@ function ExtractionMenu(props) {
             variant="outlined"
             fullWidth={ true }
             startIcon={ <DeleteIcon /> }
-            onClick={ () => {
-              onRemoveField(command, selected);
-              setSelected(null);
-            } }
+            onClick={ onRemoveField }
             className="ExtractionMenu-add-button"
           >
             Delete Field
