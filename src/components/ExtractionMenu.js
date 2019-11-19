@@ -80,7 +80,7 @@ function ExtractionMenu(props) {
   const [ selected, setSelected ] = useState(null);
 
   useEffect(() => {
-    const field = getLastField(fields)
+    const field = getLastField(fields);
     setSelected(field);
   }, [fields]);
 

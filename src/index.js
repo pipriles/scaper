@@ -17,7 +17,7 @@ const theme = createMuiTheme({
     type: "dark",
     primary:   { main: "#1e2127" },
     secondary: { main: "#5a5a5a" }
-  },
+  }
 })
 
 ReactDOM.render(

@@ -22,4 +22,3 @@ const reducer = combineReducers({
 });
 
 export default createStore(reducer);
-
