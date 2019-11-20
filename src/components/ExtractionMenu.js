@@ -6,29 +6,19 @@ import Button from '@material-ui/core/button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import browser from '../browser-proxy';
-import store from '../store'; 
 import * as actions from '../actions';
 import { getField } from '../selectors';
+import sendCommand from '../command-sender';
 
 import ExtractionField from './ExtractionField';
 
 import './ExtractionMenu.css';
 
-const extractData = async (setUrl) => {
-  let { activeTab } = store.getState();
-  let resp = await sendMessageActiveTab(activeTab);
-  if (resp) setUrl(resp.url);
-};
-
-const sendMessageActiveTab = async (tab) => {
-  if ( !tab ) return 
-  const payload = 'OK';
-  let resp = await browser.tabs.sendMessage(
-      tab.id, { payload }
-  );
-  return resp
-}
+// const extractData = async (setUrl) => {
+//   let { activeTab } = store.getState();
+//   let resp = await sendMessageActiveTab(activeTab);
+//   if (resp) setUrl(resp.url);
+// };
 
 const mapStateToProps = (state) => {
   // for now just take first command
@@ -76,15 +66,13 @@ function ExtractionMenu(props) {
 
   const { command, fields } = props;
 
-  const [ url, setUrl ] = useState('');
+  // const [ url, setUrl ] = useState('');
   const [ selected, setSelected ] = useState(null);
 
   useEffect(() => {
     const field = getLastField(fields);
     setSelected(field);
   }, [fields]);
-
-  console.log(fields, selected);
 
   const onSelectField = setSelected;
 
@@ -99,13 +87,18 @@ function ExtractionMenu(props) {
     props.onRemoveField(command, selected);
   };
 
+  const extractData = async () => {
+    console.log(command);
+    let resp = await sendCommand(command);
+    console.log(resp);
+  };
+
   // fetch selectors here
   // pass it to extraction field
   
   return (
     <div className="ExtractionMenu">
       <div className="ExtractionMenu-block">
-        { url && ( <p>{ url }</p> ) }
         <div className="ExtractionMenu-fields">
           { Object.values(fields).map( 
             (field) => 
@@ -147,7 +140,7 @@ function ExtractionMenu(props) {
       <div className="ExtractionMenu-block">
         <button 
           className="ExtractionMenu-button"
-          onClick={ () => extractData(setUrl) }>
+          onClick={ () => extractData() }>
           Extract
         </button>
       </div>
@@ -159,3 +152,4 @@ export default connect(
   mapStateToProps, 
   mapDispatchToProps
 )(ExtractionMenu);
+

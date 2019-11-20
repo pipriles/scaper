@@ -11,20 +11,25 @@ const sendCommand = async (command) => {
 };
 
 const sendExtractCommand = async (command) => {
-  const { commandType, parameters } = command;
+  const { parameters } = command;
 
   // need store
-  state = store.getState();
+  const state = store.getState();
+  console.log(state);
 
   const fields    = parameters.fields.map(id => state.fields[id]);
-  const selectors = fields.map(f => state.selector[f.selectorId]);
-  const promises  = selectors.map(sendSelector);
-  const responses = await Promise.all(extractor);
-  const data = {};
+  const responses = await Promise.all(
+    fields
+      .map(f => state.selectors[f.selectorId])
+      .map(sendSelector)
+  );
 
-  for (let i=0; i <= fields.length; i++) {
-    const key = fields[i].fieldKey;
-    const value = responses[i];
+  let data = {};
+  let key, value;
+
+  for (let i=0; i < fields.length; i++) {
+    key = fields[i].fieldKey;
+    value = responses[i];
     data[key] = value;
   }
 
@@ -32,13 +37,17 @@ const sendExtractCommand = async (command) => {
 };
 
 const sendSelector = async (selector) => {
-  return await sendMessageActiveTab(selector);
+  return await sendMessageActiveTab({ 
+    type: 'EXTRACT', 
+    payload: selector 
+  });
 };
 
-const sendMessageActiveTab = async (type, payload) => {
+const sendMessageActiveTab = async (payload) => {
   const { activeTab } = store.getState();
   if ( !activeTab ) return;
-  return await browser.tabs.sendMessage(
-    activeTab.id, { type, payload });
+  return await browser.tabs.sendMessage(activeTab.id, payload);
 }
+
+export default sendCommand;
 

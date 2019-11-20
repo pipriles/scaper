@@ -5,9 +5,9 @@
     "query": "",
     "queryType": "CSS",
     "extractionType": "GET_TEXT",
+    "elementIndex": null,
     "parameters": {
-      "stripText": true,
-      "elementIndex": null
+      "stripText": true
     }
   },
   "2": {
@@ -16,9 +16,10 @@
     "query": "",
     "queryType": "CSS",
     "extractionType": "GET_ATTRIBUTE",
+    "elementIndex": null,
     "parameters": {
       "stripText": true,
-      "elementIndex": null
+      "name": null
     }
   },
   "3": {
@@ -27,9 +28,9 @@
     "query": "",
     "queryType": "CSS",
     "extractionType": "GET_TEXT",
+    "elementIndex": null,
     "parameters": {
-      "stripText": true,
-      "elementIndex": null
+      "stripText": true
     }
   },
   "4": {
@@ -38,9 +39,9 @@
     "query": "",
     "queryType": "CSS",
     "extractionType": "GET_TEXT",
+    "elementIndex": null,
     "parameters": {
-      "stripText": true,
-      "elementIndex": null
+      "stripText": true
     }
   }
 }
