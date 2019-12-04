@@ -88,7 +88,7 @@ function ExtractionMenu(props) {
   };
 
   const extractData = async () => {
-    console.log(command);
+    // console.log('[COMMAND]', command);
     let resp = await sendCommand(command);
     console.log(resp);
   };

@@ -92,7 +92,7 @@ function SelectorMenu(props) {
         <hr />
 
         <SelectorParams 
-          params={ selector.parameters }
+          selector={ selector }
           setParams={ props.setParams }
         />
 

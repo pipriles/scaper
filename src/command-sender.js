@@ -15,7 +15,6 @@ const sendExtractCommand = async (command) => {
 
   // need store
   const state = store.getState();
-  console.log(state);
 
   const fields    = parameters.fields.map(id => state.fields[id]);
   const responses = await Promise.all(
