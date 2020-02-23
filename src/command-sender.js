@@ -1,5 +1,5 @@
-import store from './store';
-import browser from './browser-proxy';
+import store from './store.js';
+import browser from './browser-proxy.js';
 
 const sendCommand = async (command) => {
   switch (command.commandType) {

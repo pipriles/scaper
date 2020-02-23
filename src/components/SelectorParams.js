@@ -19,7 +19,6 @@ function SelectorParams({ selector, setParams }) {
   };
 
   const onChangeAttr = (event) => {
-    if (!event.target.value) return;
     setParams({ ...params, name: event.target.value });
   };
 
@@ -47,7 +46,7 @@ function SelectorParams({ selector, setParams }) {
 
       </div>
 
-    { (extractionType == "GET_ATTRIBUTE") 
+    { (extractionType === "GET_ATTRIBUTE") 
       && <InputBase
           placeholder="Attribute name"
           value={ params.name || '' }
