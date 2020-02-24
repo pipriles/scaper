@@ -39,6 +39,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action);
     },
     onFieldValueChange: (field) => (event, value) => {
+      console.log(value);
       const payload = { 
         id: field.id, 
         selectorId: value.id 

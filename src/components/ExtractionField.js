@@ -64,7 +64,7 @@ function ExtractionField({
           onChange={ onFieldValueChange(field) }
           renderInput={ params => {
             return <InputBase 
-              ref={params.ref}
+              ref={params.InputProps.ref}
               inputProps={params.inputProps}
               placeholder="Selector"
               className="ExtractionField-input"
