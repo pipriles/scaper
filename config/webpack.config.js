@@ -539,6 +539,7 @@ module.exports = function(webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
+            excludeChunks: [ 'background', 'content' ]
           },
           isEnvProduction
           ? {
