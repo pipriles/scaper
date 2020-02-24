@@ -100,23 +100,11 @@ function ExtractionMenu(props) {
   return (
     <div className="ExtractionMenu">
       <div className="ExtractionMenu-block">
-        <div className="ExtractionMenu-fields">
-          { Object.values(fields).map( 
-            (field) => 
-              <ExtractionField 
-                key={ field.id } 
-                field={ field }
-                onFieldKeyChange={ onFieldKeyChange }
-                onFieldValueChange={ onFieldValueChange }
-                onClick={ onSelectField }
-              /> 
-          ) }
-        </div>
-        <br />
         <ButtonGroup 
           size="small" 
           aria-label="small outlined button group"
           fullWidth={ true }
+          className="ExtractionMenu-button-group"
         >
           <Button 
             variant="outlined"
@@ -137,6 +125,18 @@ function ExtractionMenu(props) {
             Delete Field
           </Button>
         </ButtonGroup>
+        <div className="ExtractionMenu-fields">
+          { Object.values(fields).map( 
+            (field) => 
+              <ExtractionField 
+                key={ field.id } 
+                field={ field }
+                onFieldKeyChange={ onFieldKeyChange }
+                onFieldValueChange={ onFieldValueChange }
+                onClick={ onSelectField }
+              /> 
+          ) }
+        </div>
       </div>
       <div className="ExtractionMenu-block">
         <button 

@@ -19,6 +19,10 @@
   border-radius: 0px;
 }
 
+.ExtractionMenu-button-group {
+  margin-bottom: 20px;
+}
+
 .ExtractionMenu-link {
   color: #09d3ac;
 }
