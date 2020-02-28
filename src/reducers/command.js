@@ -11,6 +11,14 @@ export default createReducer(COMMANDS, {
     const distint = (id) => id !== action.id;
     const fields  = command.parameters.fields.filter(distint);
     command.parameters.fields = fields;
+  },
+  'ADD_COMMAND': (state, action) => {
+    const command = action.payload.id;
+    state[command] = action.payload;
+  },
+  'REMOVE_COMMAND': (state, action) => {
+    const command = action.payload.id;
+    delete state[command];
   }
 });
 

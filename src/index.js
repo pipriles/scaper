@@ -15,8 +15,11 @@ import * as serviceWorker from './serviceWorker';
 const theme = createMuiTheme({
   palette: {
     type: "dark",
-    primary:   { main: "#1e2127" },
-    secondary: { main: "#5a5a5a" }
+    primary:   { main: "#36393f" },
+    secondary: { main: "#72767d" }
+  },
+  typography: {
+    fontFamily: 'Oxanium, "Helvetica Neue", Helvetica, Arial, sans-serif'
   }
 })
 
