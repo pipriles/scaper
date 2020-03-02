@@ -40,7 +40,7 @@ function Command({ classes, selected, command, onClickMore, ...other }) {
   return (
     <>
       <div className={ rootClass } { ...other }> 
-        <span className={ classes.text }> { command.commandType ? command.commandType : command.id } </span>
+        <span className={ classes.text }> { command.commandType } </span>
         <IconButton 
           onClick={ onClickMore }
           className={ classes.button } 

@@ -5,9 +5,23 @@ import { withStyles } from '@material-ui/core/styles';
 import CommandsToolbar from './CommandsToolbar.js';
 import Command from './Command';
 
+import CommandParameters from './CommandParameters.js';
+
 import * as actions from '../actions';
 
-const styles = {}
+const creator = (theme) => ({
+  root: {
+    display: 'flex',
+    height: '100%'
+  },
+  main: {
+    flexGrow: 1
+  },
+  details: {
+    flexBasis: 450,
+    margin: theme.spacing(1, 1, 1, 0)
+  }
+});
 
 const mapStateToProps = (state, ownProps) => {
 
@@ -18,23 +32,29 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleCommandAdd: (event) => {
+    addCommand: (event) => {
       const payload = actions.addCommand();
       dispatch(payload);
     },
-    handleCommandRemove: (command) => {
+    removeCommand: (command) => {
       const payload = actions.removeCommand(command)
       dispatch(payload);
     }
   }
 };
 
-function AutomationMenu({ classes, commands, handleCommandAdd, handleCommandRemove }) {
+function AutomationMenu({ classes, commands, addCommand, removeCommand }) {
 
   const [selected, setSelected] = React.useState(null);
 
   const handleSelect = (command) => (event) => {
-    setSelected(command)
+
+    if ( selected === command.id ) {
+      setSelected(null);
+      return;
+    }
+
+    setSelected(command);
   }
 
   const handleRemoveSelected = () => {
@@ -44,34 +64,57 @@ function AutomationMenu({ classes, commands, handleCommandAdd, handleCommandRemo
 
     if ( !selected ) {
       const last = commands[commands.length - 1];
-      handleCommandRemove(last.id);
+      removeCommand(last.id);
       return;
     }
 
-    handleCommandRemove(selected);
+    removeCommand(selected);
     setSelected(null);
   };
 
+  const handleCommandAdd = () => {
+    const last = commands[commands.length - 1];
+    if ( !last.commandType ) 
+      return;
+
+    addCommand();
+  }
+
   return (
-    <>
-      <CommandsToolbar 
-        onClickAdd={ handleCommandAdd } 
-        onClickDelete={ handleRemoveSelected }
-      />
-      <div>
-        { commands.map( (cmd) => 
-          <Command 
-            onClick={ handleSelect(cmd.id) }
-            selected={ selected === cmd.id }
-            key={ cmd.id } 
-            command={ cmd } 
-          /> ) }
+    <div className={ classes.root }>
+
+      <div className={ classes.main }>
+
+        <CommandsToolbar 
+          onClickAdd={ handleCommandAdd } 
+          onClickDelete={ handleRemoveSelected }
+        />
+
+        <div>
+          { commands.map( (cmd) => 
+            <Command 
+              onClick={ handleSelect(cmd.id) }
+              onClickMore= { (event) => event.stopPropagation() }
+              selected={ selected === cmd.id }
+              key={ cmd.id } 
+              command={ cmd } 
+            /> ) }
+        </div>
+
       </div>
-    </>
+
+      { ( !!selected ) 
+        ? (
+          <div className={ classes.details }>
+            <CommandParameters commandId={ selected } />
+          </div>
+        ) : null }
+
+    </div>
   );
 
 }
 
-const AutomationMenuWithStyles = withStyles(styles)(AutomationMenu);
+const AutomationMenuWithStyles = withStyles(creator)(AutomationMenu);
 export default connect(mapStateToProps, mapDispatchToProps)(AutomationMenuWithStyles);
 

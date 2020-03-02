@@ -1,4 +1,4 @@
-import STEPS from '../constants/steps.json';
+import STEPS from '../defaults/steps.json';
 import { createReducer } from 'redux-starter-kit';
 
 export default createReducer(STEPS, {

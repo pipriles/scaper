@@ -19,7 +19,7 @@ const theme = createMuiTheme({
     secondary: { main: "#72767d" }
   },
   typography: {
-    fontFamily: 'Oxanium, "Helvetica Neue", Helvetica, Arial, sans-serif'
+    fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif'
   }
 })
 

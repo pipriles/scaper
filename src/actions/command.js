@@ -19,3 +19,10 @@ export const removeCommand = (command) => {
     payload: { id: command }
   }
 };
+
+export const changeCommandType = (commandId, commandType) => {
+  return {
+    type: 'UPDATE_COMMAND',
+    payload: { id: commandId, commandType }
+  }
+}

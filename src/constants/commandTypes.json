@@ -1,0 +1,109 @@
+{
+  "EXTRACT_DATA": [
+    "FIELDS"
+  ],
+  "WAIT_FOR_ELEMENT_PRESENT" : [
+    "LOCATOR",
+    "TIMEOUT"
+  ],
+  "WAIT_FOR_ELEMENT_NOT_PRESENT" : [
+    "LOCATOR",
+    "TIMEOUT"
+  ],
+  "WAIT_FOR_ELEMENT_VISIBLE" : [
+    "LOCATOR",
+    "TIMEOUT"
+  ],
+  "WAIT_FOR_ELEMENT_NOT_VISIBLE" : [
+    "LOCATOR",
+    "TIMEOUT"
+  ],
+  "WAIT_FOR_ELEMENT_EDITABLE" : [
+    "LOCATOR",
+    "TIMEOUT"
+  ],
+  "WAIT_FOR_ELEMENT_NOT_EDITABLE" : [
+    "LOCATOR",
+    "TIMEOUT"
+  ],
+  "PAGE_WAIT" : [
+  ],
+  "CLICK" : [
+    "LOCATOR"
+  ],
+  "DOUBLE_CLICK" : [
+    "LOCATOR"
+  ],
+  "CLICK_AT" : [
+    "LOCATOR",
+    "COORDINATES"
+  ],
+  "DOUBLE_CLICK_AT" : [
+    "LOCATOR",
+    "COORDINATES"
+  ],
+  "FOCUS" : [
+    "LOCATOR"
+  ],
+  "MOUSE_OVER" : [
+    "LOCATOR"
+  ],
+  "MOUSE_OUT" : [
+    "LOCATOR"
+  ],
+  "MOUSE_DOWN" : [
+    "LOCATOR"
+  ],
+  "MOUSE_DOWN_RIGHT" : [
+    "LOCATOR"
+  ],
+  "MOUSE_DOWN_AT" : [
+    "LOCATOR",
+    "COORDINATES"
+  ],
+  "MOUSE_DOWN_RIGHT_AT" : [
+    "LOCATOR",
+    "COORDINATES"
+  ],
+  "MOUSE_UP" : [
+    "LOCATOR"
+  ],
+  "MOUSE_UP_RIGHT" : [
+    "LOCATOR"
+  ],
+  "MOUSE_UP_AT" : [
+    "LOCATOR",
+    "COORDINATES"
+  ],
+  "MOUSE_UP_RIGHT_AT" : [
+    "LOCATOR",
+    "COORDINATES"
+  ],
+  "MOUSE_MOVE" : [
+    "LOCATOR"
+  ],
+  "MOUSE_MOVE_AT" : [
+    "LOCATOR",
+    "COORDINATES"
+  ],
+  "TYPE" : [
+    "LOCATOR",
+    "TEXT"
+  ],
+  "SEND_KEYS" : [
+    "LOCATOR",
+    "TEXT"
+  ],
+  "CHECK" : [
+    "LOCATOR"
+  ],
+  "UNCHECK" : [
+    "LOCATOR"
+  ],
+  "SUBMIT" : [
+    "LOCATOR"
+  ],
+  "OPEN": [
+    "URL"
+  ]
+}

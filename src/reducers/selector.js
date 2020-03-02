@@ -1,4 +1,4 @@
-import SELECTORS from '../constants/selectors.json';
+import SELECTORS from '../defaults/selectors.json';
 
 export default (state = SELECTORS, action) => {
   let id;

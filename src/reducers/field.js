@@ -1,5 +1,5 @@
+import FIELDS from '../defaults/fields.json';
 import { createReducer } from 'redux-starter-kit';
-import FIELDS from '../constants/fields.json';
 
 export default createReducer(FIELDS, {
   'ADD_FIELD': (state, action) => {
