@@ -15,19 +15,22 @@ import COMMANDS from '../constants/commandTypes.json';
 const styles = (theme) => ({
 
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: "100%"
+    width: '100%'
   },
   popperDisablePortal: {
-    // position: 'static',
-    // width: '100%',
-    // flexGrow: 1,
+    position: 'absolute',
+    width: '100%',
+    // maxWidth: 500,
     overflow: 'auto',
-    borderTop: `1px solid ${theme.palette.primary.main}`,
-    maxHeight: 450,
+    maxHeight: 200,
     backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.light
+    color: theme.palette.primary.light,
+    zIndex: 9999,
+    marginTop: 2
+  },
+
+  inputWrapper: {
+    width: '100%'
   },
 
   input: {
@@ -70,18 +73,26 @@ function Autocomplete({ classes, value, onChange, ...other }) {
     value: value,
     onChange: onChange,
     ...other
- });
+  });
+
+  const { className } = other;
+  const input = React.useRef(null);
+  const width = input.current ? input.current.clientWidth : 0;
+
+  console.log(input);
+  console.log(width);
 
   return (
 
-    <div className={ classes.root } >
+    <div className={ `${classes.root}` + ( className ? ` ${className}` : '' ) } ref={ input }>
 
-      <div { ...getRootProps() }>
+      <div { ...getRootProps() } className={ classes.inputWrapper }>
         <InputBase { ...getInputProps() } className={ classes.input } fullWidth />
       </div>
 
-      <div className={ classes.popperDisablePortal } >
+      <div className={ classes.popperDisablePortal } style={{ width }} >
         { groupedOptions.length > 0 ? (
+
           <List { ...getListboxProps() } dense >
             
             { groupedOptions.map((option, index) => (

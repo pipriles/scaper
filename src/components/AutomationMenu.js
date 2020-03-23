@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
-import CommandsToolbar from './CommandsToolbar.js';
-import Command from './Command';
+import CommandList from './CommandList';
+import CommandInput from './CommandInput';
 
-import CommandParameters from './CommandParameters.js';
+import CommandParameters from './CommandParameters';
 
 import * as actions from '../actions';
 
@@ -15,7 +15,19 @@ const creator = (theme) => ({
     height: '100%'
   },
   main: {
-    flexGrow: 1
+    flexGrow: 1,
+    margin: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  commandList: {
+    flexGrow: 1,
+    maxHeight: 'calc(100% - 266px)'
+  },
+  innerCommandList: {
+    maxHeight: 'calc(100% - 48px)',
+    overflow: 'auto'
   },
   details: {
     flexBasis: 450,
@@ -27,7 +39,6 @@ const mapStateToProps = (state, ownProps) => {
 
   const commands = state.steps.map( s => state.commands[s] )
   return { commands }
-
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -73,10 +84,9 @@ function AutomationMenu({ classes, commands, addCommand, removeCommand }) {
   };
 
   const handleCommandAdd = () => {
-    const last = commands[commands.length - 1];
-    if ( !last.commandType ) 
-      return;
 
+    const last = commands[commands.length - 1];
+    if (!!last && !last.commandType) return;
     addCommand();
   }
 
@@ -85,21 +95,16 @@ function AutomationMenu({ classes, commands, addCommand, removeCommand }) {
 
       <div className={ classes.main }>
 
-        <CommandsToolbar 
-          onClickAdd={ handleCommandAdd } 
+        <CommandList 
+          classes={{ root: classes.commandList, innerList: classes.innerCommandList }}
+          commands={ commands }
+          selected={ selected }
+          onClickAdd={ handleCommandAdd }
           onClickDelete={ handleRemoveSelected }
+          onCommandChange={ handleSelect }
         />
 
-        <div>
-          { commands.map( (cmd) => 
-            <Command 
-              onClick={ handleSelect(cmd.id) }
-              onClickMore= { (event) => event.stopPropagation() }
-              selected={ selected === cmd.id }
-              key={ cmd.id } 
-              command={ cmd } 
-            /> ) }
-        </div>
+        <CommandInput commandId={ selected } />
 
       </div>
 

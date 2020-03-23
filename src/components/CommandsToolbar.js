@@ -7,13 +7,13 @@ import AddIcon from '@material-ui/icons/Add';
 
 const stylesCreator = (theme) => ({
   root: {
-    width: 'calc(100% - 20px)',
+    // width: 'calc(100% - 20px)',
+    // margin: theme.spacing(1),
+    // maxWidth: `calc(100% - ${theme.spacing(1)}px)`,
     backgroundColor: theme.palette.primary.main,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: theme.spacing(1),
-    maxWidth: `calc(100% - ${theme.spacing(1)}px)`,
   },
   title: {
     fontFamily: theme.typography.fontFamily,

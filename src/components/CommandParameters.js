@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import CommandAutocomplete from './CommandAutocomplete.js';
+
+import CommandParameter from './CommandParameter.js';
 
 import * as actions from '../actions';
 
@@ -38,10 +39,7 @@ function CommandParameters({ classes, command, onCommandTypeChange }) {
   return (
     <div className={ classes.root }>
 
-      <CommandAutocomplete 
-        value={ command.commandType } 
-        onChange={ onCommandTypeChange }
-      />
+      <CommandParameter />
 
     </div>
   );

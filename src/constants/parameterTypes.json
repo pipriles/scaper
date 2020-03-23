@@ -1,0 +1,23 @@
+{
+  "LOCATOR": {
+    "query": "",
+    "queryType": "CSS",
+    "elementIndex": null
+  },
+  "TEXT": {
+    "input": ""
+  },
+  "URL": {
+    "url": ""
+  },
+  "TIMEOUT": {
+    "number": -1
+  },
+  "COORDINATES": {
+    "x": null,
+    "y": null
+  },
+  "FIELDS": {
+
+  }
+}

@@ -6,9 +6,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = (theme) => ({
   root: {
+    // margin: theme.spacing(0, 1),
+    // width: 'calc(100% - 20px)',
     backgroundColor: theme.palette.primary.main,
-    margin: theme.spacing(0, 1),
-    width: 'calc(100% - 20px)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
