@@ -30,7 +30,7 @@ const creator = (theme) => ({
     overflow: 'auto'
   },
   details: {
-    flexBasis: 450,
+    flexBasis: 300,
     margin: theme.spacing(1, 1, 1, 0)
   }
 });
@@ -108,12 +108,9 @@ function AutomationMenu({ classes, commands, addCommand, removeCommand }) {
 
       </div>
 
-      { ( !!selected ) 
-        ? (
-          <div className={ classes.details }>
-            <CommandParameters commandId={ selected } />
-          </div>
-        ) : null }
+      <div className={ classes.details }>
+        <CommandParameters commandId={ selected } />
+      </div>
 
     </div>
   );

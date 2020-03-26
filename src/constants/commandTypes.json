@@ -1,6 +1,22 @@
 {
-  "EXTRACT_DATA": [
-    "FIELDS"
+  "EXTRACT_TEXT": [
+    "LOCATOR",
+    "STRIP",
+    "COLLECTION",
+    "REGEX"
+  ],
+  "EXTRACT_ATTRIBUTE": [
+    "LOCATOR",
+    "ATTRIBUTE",
+    "STRIP",
+    "COLLECTION",
+    "REGEX"
+  ],
+  "EXTRACT_URL": [
+    "REGEX"
+  ],
+  "EXTRACT_TITLE": [
+    "REGEX"
   ],
   "WAIT_FOR_ELEMENT_PRESENT" : [
     "LOCATOR",

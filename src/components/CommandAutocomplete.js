@@ -79,9 +79,6 @@ function Autocomplete({ classes, value, onChange, ...other }) {
   const input = React.useRef(null);
   const width = input.current ? input.current.clientWidth : 0;
 
-  console.log(input);
-  console.log(width);
-
   return (
 
     <div className={ `${classes.root}` + ( className ? ` ${className}` : '' ) } ref={ input }>

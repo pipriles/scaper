@@ -3,7 +3,8 @@ import uuidv4 from 'uuid/v4';
 const defaultValue = {
   "id": null,
   "commandType": null,
-  "parameters": null
+  "description": "",
+  "parameters": []
 }
 
 export const addCommand = () => {
@@ -22,7 +23,14 @@ export const removeCommand = (command) => {
 
 export const changeCommandType = (commandId, commandType) => {
   return {
-    type: 'UPDATE_COMMAND',
+    type: 'UPDATE_COMMAND_TYPE',
     payload: { id: commandId, commandType }
+  }
+}
+
+export const updateCommandParameter = (commandId, parameter, value) => {
+  return {
+    type: 'UPDATE_COMMAND_PARAMETER',
+    payload: { id: commandId, parameter, value }
   }
 }

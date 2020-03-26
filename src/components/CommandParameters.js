@@ -21,26 +21,34 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onCommandTypeChange: (event, value) => {
-      const commandType = value;
-      const action = actions.changeCommandType(ownProps.commandId, commandType)
+    onChange: (type) => (value) => {
+      const { commandId } = ownProps;
+      const action = actions.updateCommandParameter(commandId, type, value)
       dispatch(action);
     }
   }
 };
 
-function CommandParameters({ classes, command, onCommandTypeChange }) {
+function CommandParameters({ classes, command, onChange }) {
 
-  if ( !command )
-    return null;
+  // if ( !command )
+  //   return null;
 
   /* Read Command definition and render required components */
+  console.log(command);
+
+  let parameterComponents = [];
+
+  if ( !!command ) {
+    const { parameters } = command;
+    parameterComponents = Object.keys(parameters).map( (type, index) => (
+      <CommandParameter key={ type } type={ type } parameter={ parameters[type] } onChange={ onChange(type) } /> 
+    ))
+  }
 
   return (
     <div className={ classes.root }>
-
-      <CommandParameter />
-
+      { parameterComponents }
     </div>
   );
 }

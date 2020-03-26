@@ -1,18 +1,21 @@
 {
   "1": {
     "id": "1",
-    "commandType": "EXTRACT_DATA",
+    "commandType": "EXTRACT_TEXT",
+    "description": "",
     "parameters": {
-      "fields": [ "1", "2" ]
+      "LOCATOR": { "query": "", "queryType": "CSS", "elementIndex": null },
+      "STRIP": true,
+      "COLLECTION": false,
+      "REGEX": ""
     }
   },
   "2": {
     "id": "2",
     "commandType": "CLICK",
+    "description": "",
     "parameters": {
-      "query": "",
-      "queryType": "CSS",
-      "elementIndex": null
+      "LOCATOR": { "query": "", "queryType": "CSS", "elementIndex": null }
     }
   }
 }

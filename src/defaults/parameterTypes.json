@@ -4,20 +4,15 @@
     "queryType": "CSS",
     "elementIndex": null
   },
-  "TEXT": {
-    "input": ""
-  },
-  "URL": {
-    "url": ""
-  },
-  "TIMEOUT": {
-    "number": -1
-  },
+  "TEXT": "",
+  "URL": "",
+  "TIMEOUT": 1000,
   "COORDINATES": {
     "x": null,
     "y": null
   },
-  "FIELDS": {
-
-  }
+  "STRIP": true,
+  "COLLECTION": false,
+  "ATTRIBUTE": "",
+  "REGEX": ""
 }
