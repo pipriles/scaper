@@ -2,6 +2,7 @@ import COMMANDS from '../defaults/commands.json';
 import PARAMETERS from '../defaults/parameterTypes.json';
 import COMMAND_TYPES from '../constants/commandTypes.json';
 import { createReducer } from 'redux-starter-kit';
+import _ from 'lodash';
 
 export default createReducer(COMMANDS, {
   'ADD_FIELD': (state, action) => {
@@ -27,13 +28,16 @@ export default createReducer(COMMANDS, {
     const command = action.payload.id;
     const type = action.payload.commandType;
 
+    if ( !COMMAND_TYPES.hasOwnProperty(type) )
+      return;
+
     // Set default parameters values
+    console.log(COMMAND_TYPES, type, action)
     
     const parameters = COMMAND_TYPES[type].reduce((obj, type) => {
       obj[type] = PARAMETERS[type];
       return obj
     }, {});
-
 
     state[command].commandType = type;
     state[command].parameters  = parameters;
@@ -45,9 +49,15 @@ export default createReducer(COMMANDS, {
     const type    = action.payload.parameter;
     const value   = action.payload.value;
 
+    console.log(action);
+
     // not sure if immer does the magic here
     const parameters = state[command].parameters;
-    parameters[type] = { ...parameters[type], ...value };
+
+    if ( _.isPlainObject( parameters[type] ) )
+      parameters[type] = { ...parameters[type], ...value };
+    else
+      parameters[type] = value;
 
   }
 });

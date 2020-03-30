@@ -1,5 +1,12 @@
 import React from 'react';
 import LocatorParameter from './LocatorParameter';
+import TextParameter from './TextParameter';
+import UrlParameter from './UrlParameter';
+import TimeoutParameter from './TimeoutParameter';
+import AttributeParameter from './AttributeParameter';
+import CoordinatesParameter from './CoordinatesParameter';
+import StripParameter from './StripParameter';
+import CollectionParameter from './CollectionParameter';
 
 function parameterComponent(parameterType) {
 
@@ -8,37 +15,36 @@ function parameterComponent(parameterType) {
     case 'LOCATOR': 
       return LocatorParameter;
     case 'TEXT':
-      return null;
+      return TextParameter;
     case 'URL': 
-      return null;
+      return UrlParameter;
     case 'TIMEOUT': 
-      return null;
+      return TimeoutParameter;
     case 'COORDINATES': 
-      return null;
+      return CoordinatesParameter;
     case 'STRIP': 
-      return null;
+      return StripParameter;
     case 'COLLECTION':
-      return null;
+      return CollectionParameter;
     case 'ATTRIBUTE':
-      return null;
+      return AttributeParameter;
     default:
       console.log(parameterType);
       return null;
   };
 }
 
-function CommandParameter({ type, parameter, onChange }) {
+function CommandParameter({ type, parameter, onChange, ...other }) {
 
-  console.log(type)
   const Component = parameterComponent(type);
 
-  console.log(parameter);
-
-  if ( !Component || !parameter )
+  if ( !Component || parameter === undefined )
     return null;
 
   return ( 
-    <Component parameter={ parameter } onChange={ onChange } />
+    <div { ...other }>
+        <Component parameter={ parameter } onChange={ onChange } />
+    </div>
   );
 }
 

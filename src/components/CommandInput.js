@@ -55,7 +55,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 function CommandInput({ classes, command, onCommandTypeChange }) {
 
-  console.log(command);
   const commandType = !!command ? command.commandType : null;
 
   return (

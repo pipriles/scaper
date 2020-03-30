@@ -11,6 +11,9 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.primary.main,
     height: `calc(100% - ${2*theme.spacing(1)}px)`,
     padding: theme.spacing(1)
+  },
+  parameter: {
+    marginBottom: theme.spacing(1) / 2
   }
 });
 
@@ -35,14 +38,19 @@ function CommandParameters({ classes, command, onChange }) {
   //   return null;
 
   /* Read Command definition and render required components */
-  console.log(command);
-
   let parameterComponents = [];
 
   if ( !!command ) {
+
     const { parameters } = command;
+
     parameterComponents = Object.keys(parameters).map( (type, index) => (
-      <CommandParameter key={ type } type={ type } parameter={ parameters[type] } onChange={ onChange(type) } /> 
+      <CommandParameter 
+        className={ classes.parameter }
+        key={ type } 
+        type={ type } 
+        parameter={ parameters[type] } 
+        onChange={ onChange(type) } /> 
     ))
   }
 
