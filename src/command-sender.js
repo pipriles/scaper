@@ -1,45 +1,26 @@
 import store from './store.js';
 import browser from './browser-proxy.js';
 
-const sendCommand = async (command) => {
-  switch (command.commandType) {
-    case 'EXTRACT_DATA':
-      return sendExtractCommand(command);
-    default:
-      return command;
-  }
-};
+/* We may need to pass different kind of data 
+ * to the browser using this same interface
+ */
 
-const sendExtractCommand = async (command) => {
-  const { parameters } = command;
-
-  // need store
-  const state = store.getState();
-
-  const fields    = parameters.fields.map(id => state.fields[id]);
-  const responses = await Promise.all(
-    fields
-      .map(f => state.selectors[f.selectorId])
-      .map(sendSelector)
-  );
-
-  let data = {};
-  let key, value;
-
-  for (let i=0; i < fields.length; i++) {
-    key = fields[i].fieldKey;
-    value = responses[i];
-    data[key] = value;
-  }
-
-  return data;
-};
-
-const sendSelector = async (selector) => {
-  return await sendMessageActiveTab({ 
-    type: 'EXTRACT', 
-    payload: selector 
+export const sendCommand = async (command) => {
+  return await sendMessageActiveTab({
+    type: 'COMMAND',
+    payload: command
   });
+};
+
+export const runCommands = async (commands) => {
+
+  for (const cmd of commands) {
+    console.log(cmd.commandType);
+    const resp = await sendCommand(cmd);
+    console.log(resp);
+    /* Store command results on an intermediate area */ 
+  }
+
 };
 
 const sendMessageActiveTab = async (payload) => {
@@ -47,6 +28,4 @@ const sendMessageActiveTab = async (payload) => {
   if ( !activeTab ) return;
   return await browser.tabs.sendMessage(activeTab.id, payload);
 }
-
-export default sendCommand;
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
+import RecipePlayer from './RecipePlayer';
 import CommandList from './CommandList';
 import CommandInput from './CommandInput';
 
@@ -94,6 +95,8 @@ function AutomationMenu({ classes, commands, addCommand, removeCommand }) {
     <div className={ classes.root }>
 
       <div className={ classes.main }>
+
+        <RecipePlayer />
 
         <CommandList 
           classes={{ root: classes.commandList, innerList: classes.innerCommandList }}

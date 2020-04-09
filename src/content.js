@@ -14,50 +14,74 @@ const getElementByCSS = (query, index) => {
   return document.querySelectorAll(query)[index];
 };
 
-const getElement = (selector) => {
-  const { query } = selector;
-  if (!query) return null;
-  return selector.queryType === 'CSS' 
-    ? getElementByCSS(query) 
-    : getElementByXPATH(query);
+const getElement = (locator) => {
+
+  const { query, queryType } = locator;
+  const extractor = queryType !== 'XPATH' ? getElementByCSS : getElementByXPATH;
+
+  return !query ? null : extractor(query);
 };
 
-const getElementText = (element, params) => {
-  let text = element.textContent;
-  if (text && params.stripText) 
-    text = text.trim()
-  return text;
+const extractText = ({ parameters }) => {
+
+  const locator = parameters['LOCATOR'];
+  const element = getElement(locator);
+
+  const stripText = parameters['STRIP'];
+  const string    = element.textContent;
+
+  return string && stripText ? string.trim() : string;
+
 };
 
-const getElementAttr = (element, params) => {
-  let attr = element.getAttribute(params.name);
-  if (attr && params.stripText) 
-    attr = attr.trim()
-  return attr;
+const extractAttribute = ({ parameters }) => {
+
+  const locator = parameters['LOCATOR'];
+  const element = getElement(locator);
+
+  const name = parameters['ATTRIBUTE'];
+  const stripText = parameters['STRIP'];
+  const attribute = element.getAttribute(name);
+
+  return attribute && stripText ? attribute.trim() : attribute;
+}
+
+const extractUrl = ({ parameters }) => {
+  return window.location.href;
 };
 
-const extractSelector = (selector) => {
-  const element = getElement(selector);
-  const params  = selector.parameters;
+const extractTitle = ({ parameters }) => {
+  return document.title;
+};
 
-  if (!element) 
-    return null;
+const makeResponse      = (payload) => ({ type: 'SUCCESS', payload });
+const makeErrorResponse = (payload) => ({ type: 'ERROR'  , payload });
 
-  switch (selector.extractionType) {
-    case 'GET_TEXT': 
-      return getElementText(element, params);
-    case 'GET_ATTRIBUTE': 
-      return getElementAttr(element, params);
-    default:
-      console.log('Extraction type not found');
-      return null;
+const commandExecutorMap = {
+  'EXTRACT_TEXT':       extractText,
+  'EXTRACT_ATTRIBUTE':  extractAttribute,
+  'EXTRACT_URL':        extractUrl,
+  'EXTRACT_TITLE':      extractTitle,
+};
+
+const executeCommand = (command) => {
+
+  const action = commandExecutorMap[command.commandType];
+
+  if ( action === undefined ) {
+    const payload = { 'message': 'Invalid command type' }
+    return makeErrorResponse(payload);
   }
+
+  const payload = action(command);
+  return makeResponse(payload);
+
 };
 
 const handleMessage = (message) => {
   switch (message.type) {
-    case 'EXTRACT':
-      return extractSelector(message.payload);
+    case 'COMMAND':
+      return executeCommand(message.payload);
     default:
       return null;
   }
@@ -66,10 +90,10 @@ const handleMessage = (message) => {
 browser.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     const url = window.location.href;
-    const data = handleMessage(request);
-    console.log(data);
+    const response = handleMessage(request);
+    console.log(response);
     console.log(request, sender, url);
-    sendResponse(data);
+    sendResponse(response);
     return true;
   }
 );
