@@ -288,7 +288,7 @@ module.exports = function(webpackEnv) {
       splitChunks: {
         chunks: (chunk) => {
           return chunk.name !== 'content' 
-              && chunk.name !== 'background';
+            && chunk.name !== 'background';
         },
         name: false,
       },
@@ -385,11 +385,134 @@ module.exports = function(webpackEnv) {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
+            {
+              test: /google-closure-library\/closure\/goog\/base/,
+              use: [
+                'imports-loader?this=>{goog:{}}&goog=>this.goog',
+                'exports-loader?goog',
+              ],
+            },
+            {
+              test: /google-closure-library\/closure\/goog\/.*\.js/,
+              loader: 'closure-loader',
+              options: {
+                paths: [
+                  path.resolve(
+                    __dirname,
+                    '../../node_modules/google-closure-library/closure/goog'
+                  ),
+                  path.resolve(
+                    __dirname,
+                    '../../node_modules/google-closure-library/closure/goog/debug'
+                  ),
+                ],
+                watch: false,
+                es6mode: true,
+              },
+              exclude: [/google-closure-library\/closure\/goog\/base\.js$/],
+            },
+            {
+              test: /selenium-atoms\/.*\.js$/,
+              include: [
+                path.resolve(__dirname, 'selenium'),
+                path.resolve(__dirname, 'src'),
+              ],
+              use: {
+                loader: 'closure-loader',
+                options: {
+                  es6mode: true,
+                  watch: false,
+                  paths: [
+                    path.resolve(
+                      __dirname,
+                      '../../node_modules/google-closure-library/closure/goog'
+                    ),
+                    path.resolve(
+                      __dirname,
+                      '../../node_modules/google-closure-library/closure/goog/debug'
+                    ),
+                    path.resolve(__dirname, 'selenium/selenium-atoms'),
+                  ],
+                },
+              },
+            },
+            {
+              test: /third_party\/wgxpath\/.*\.js$/,
+              include: [
+                path.resolve(__dirname, 'selenium'),
+                path.resolve(__dirname, 'src'),
+              ],
+              use: {
+                loader: 'closure-loader',
+                options: {
+                  es6mode: true,
+                  watch: false,
+                  paths: [
+                    path.resolve(
+                      __dirname,
+                      '../../node_modules/google-closure-library/closure/goog'
+                    ),
+                  ],
+                },
+              },
+            },
+            {
+              test: /atoms\/.*\.js$/,
+              include: [
+                path.resolve(__dirname, 'selenium'),
+                path.resolve(__dirname, 'src'),
+              ],
+              use: {
+                loader: 'closure-loader',
+                options: {
+                  es6mode: true,
+                  watch: false,
+                  paths: [
+                    path.resolve(
+                      __dirname,
+                      '../../node_modules/google-closure-library/closure/goog'
+                    ),
+                    path.resolve(
+                      __dirname,
+                      '../../node_modules/google-closure-library/closure/goog/debug'
+                    ),
+                    path.resolve(__dirname, 'selenium/third_party/wgxpath'),
+                    path.resolve(__dirname, 'selenium/atoms'),
+                  ],
+                },
+              },
+            },
+            {
+              test: /closure-polyfill\.js$/,
+              include: [
+                path.resolve(__dirname, 'selenium'),
+                path.resolve(__dirname, 'src'),
+              ],
+              use: {
+                loader: 'closure-loader',
+                options: {
+                  es6mode: true,
+                  watch: false,
+                  paths: [
+                    path.resolve(
+                      __dirname,
+                      '../../node_modules/google-closure-library/closure/goog'
+                    ),
+                    path.resolve(__dirname, 'selenium/atoms'),
+                    path.resolve(__dirname, 'selenium/selenium-atoms'),
+                  ],
+                },
+              },
+            },
+
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: [
+                paths.appSrc,
+                path.resolve(__dirname, 'selenium'),
+              ],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -532,6 +655,9 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        goog: 'google-closure-library/closure/goog/base',
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(

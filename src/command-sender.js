@@ -15,7 +15,7 @@ export const sendCommand = async (command) => {
 export const runCommands = async (commands) => {
 
   for (const cmd of commands) {
-    console.log(cmd.commandType);
+    console.log(cmd);
     const resp = await sendCommand(cmd);
     console.log(resp);
     /* Store command results on an intermediate area */ 

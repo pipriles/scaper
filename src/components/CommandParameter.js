@@ -43,7 +43,7 @@ function CommandParameter({ type, parameter, onChange, ...other }) {
 
   return ( 
     <div { ...other }>
-        <Component parameter={ parameter } onChange={ onChange } />
+      <Component parameter={ parameter } onChange={ onChange } />
     </div>
   );
 }

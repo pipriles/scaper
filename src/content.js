@@ -1,6 +1,9 @@
 import browser from 'webextension-polyfill';
+import Selenium from './selenium-ide/content/selenium-api.js';
 
 console.log('Listening to commands...');
+
+const selenium = new Selenium.createForWindow(window, true);
 
 const getElementByXPATH = (query) => {
   const result = document.evaluate(
@@ -20,6 +23,12 @@ const getElement = (locator) => {
   const extractor = queryType !== 'XPATH' ? getElementByCSS : getElementByXPATH;
 
   return !query ? null : extractor(query);
+};
+
+const encodeLocator = locator => {
+  const { query, queryType } = locator;
+  const prefix = queryType !== 'XPATH' ? 'css=' : 'xpath=';
+  return !query ? null : prefix + query;
 };
 
 const extractText = ({ parameters }) => {
@@ -54,6 +63,13 @@ const extractTitle = ({ parameters }) => {
   return document.title;
 };
 
+const doClick = ({ parameters }) => {
+  const locator = parameters['LOCATOR'];
+  const encoded = encodeLocator(locator);
+  console.log('ENCODED!', encoded);
+  return selenium.doClick(encoded);
+};
+
 const makeResponse      = (payload) => ({ type: 'SUCCESS', payload });
 const makeErrorResponse = (payload) => ({ type: 'ERROR'  , payload });
 
@@ -62,10 +78,12 @@ const commandExecutorMap = {
   'EXTRACT_ATTRIBUTE':  extractAttribute,
   'EXTRACT_URL':        extractUrl,
   'EXTRACT_TITLE':      extractTitle,
+  'CLICK':              doClick
 };
 
 const executeCommand = (command) => {
 
+  console.log(command);
   const action = commandExecutorMap[command.commandType];
 
   if ( action === undefined ) {

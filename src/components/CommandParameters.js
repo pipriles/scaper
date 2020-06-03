@@ -1,4 +1,5 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -61,5 +62,9 @@ function CommandParameters({ classes, command, onChange }) {
   );
 }
 
-const styledCommandParameters = withStyles(styles)(CommandParameters);
-export default connect(mapStateToProps, mapDispatchToProps)(styledCommandParameters);
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(CommandParameters);
+
