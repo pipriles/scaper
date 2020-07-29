@@ -14,10 +14,20 @@ export const sendCommand = async (command) => {
 
 export const runCommands = async (commands) => {
 
+  const { activeTab } = store.getState();
+
   for (const cmd of commands) {
     console.log(cmd);
+
+    let tab = await browser.tabs.get(activeTab.id);
+    console.log('BEFORE', tab.status);
+
+    // Wait until it is ready
     const resp = await sendCommand(cmd);
-    console.log(resp);
+
+    tab = await browser.tabs.get(activeTab.id);
+    console.log('AFTER', tab.status);
+
     /* Store command results on an intermediate area */ 
   }
 

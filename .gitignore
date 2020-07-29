@@ -25,4 +25,4 @@ yarn-error.log*
 peru.yaml
 .peru
 
-selenium
+src/selenium

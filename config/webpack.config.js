@@ -26,6 +26,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const eslint = require('eslint');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -354,6 +355,9 @@ module.exports = function(webpackEnv) {
         // It's important to do this before Babel processes the JS.
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
+          exclude: [
+            path.resolve(__dirname, '../src/selenium')
+          ],
           enforce: 'pre',
           use: [
             {
@@ -399,11 +403,11 @@ module.exports = function(webpackEnv) {
                 paths: [
                   path.resolve(
                     __dirname,
-                    '../../node_modules/google-closure-library/closure/goog'
+                    '../node_modules/google-closure-library/closure/goog'
                   ),
                   path.resolve(
                     __dirname,
-                    '../../node_modules/google-closure-library/closure/goog/debug'
+                    '../node_modules/google-closure-library/closure/goog/debug'
                   ),
                 ],
                 watch: false,
@@ -414,8 +418,7 @@ module.exports = function(webpackEnv) {
             {
               test: /selenium-atoms\/.*\.js$/,
               include: [
-                path.resolve(__dirname, 'selenium'),
-                path.resolve(__dirname, 'src'),
+                path.resolve(__dirname, '../src'),
               ],
               use: {
                 loader: 'closure-loader',
@@ -425,13 +428,13 @@ module.exports = function(webpackEnv) {
                   paths: [
                     path.resolve(
                       __dirname,
-                      '../../node_modules/google-closure-library/closure/goog'
+                      '../node_modules/google-closure-library/closure/goog'
                     ),
                     path.resolve(
                       __dirname,
-                      '../../node_modules/google-closure-library/closure/goog/debug'
+                      '../node_modules/google-closure-library/closure/goog/debug'
                     ),
-                    path.resolve(__dirname, 'selenium/selenium-atoms'),
+                    path.resolve(__dirname, '../src/selenium/selenium-atoms'),
                   ],
                 },
               },
@@ -439,8 +442,7 @@ module.exports = function(webpackEnv) {
             {
               test: /third_party\/wgxpath\/.*\.js$/,
               include: [
-                path.resolve(__dirname, 'selenium'),
-                path.resolve(__dirname, 'src'),
+                path.resolve(__dirname, '../src'),
               ],
               use: {
                 loader: 'closure-loader',
@@ -450,7 +452,7 @@ module.exports = function(webpackEnv) {
                   paths: [
                     path.resolve(
                       __dirname,
-                      '../../node_modules/google-closure-library/closure/goog'
+                      '../node_modules/google-closure-library/closure/goog'
                     ),
                   ],
                 },
@@ -459,8 +461,7 @@ module.exports = function(webpackEnv) {
             {
               test: /atoms\/.*\.js$/,
               include: [
-                path.resolve(__dirname, 'selenium'),
-                path.resolve(__dirname, 'src'),
+                path.resolve(__dirname, '../src'),
               ],
               use: {
                 loader: 'closure-loader',
@@ -470,14 +471,14 @@ module.exports = function(webpackEnv) {
                   paths: [
                     path.resolve(
                       __dirname,
-                      '../../node_modules/google-closure-library/closure/goog'
+                      '../node_modules/google-closure-library/closure/goog'
                     ),
                     path.resolve(
                       __dirname,
-                      '../../node_modules/google-closure-library/closure/goog/debug'
+                      '../node_modules/google-closure-library/closure/goog/debug'
                     ),
-                    path.resolve(__dirname, 'selenium/third_party/wgxpath'),
-                    path.resolve(__dirname, 'selenium/atoms'),
+                    path.resolve(__dirname, '../src/selenium/third_party/wgxpath'),
+                    path.resolve(__dirname, '../src/selenium/atoms'),
                   ],
                 },
               },
@@ -485,8 +486,7 @@ module.exports = function(webpackEnv) {
             {
               test: /closure-polyfill\.js$/,
               include: [
-                path.resolve(__dirname, 'selenium'),
-                path.resolve(__dirname, 'src'),
+                path.resolve(__dirname, '../src'),
               ],
               use: {
                 loader: 'closure-loader',
@@ -496,10 +496,10 @@ module.exports = function(webpackEnv) {
                   paths: [
                     path.resolve(
                       __dirname,
-                      '../../node_modules/google-closure-library/closure/goog'
+                      '../node_modules/google-closure-library/closure/goog'
                     ),
-                    path.resolve(__dirname, 'selenium/atoms'),
-                    path.resolve(__dirname, 'selenium/selenium-atoms'),
+                    path.resolve(__dirname, '../src/selenium/atoms'),
+                    path.resolve(__dirname, '../src/selenium/selenium-atoms'),
                   ],
                 },
               },
@@ -509,10 +509,7 @@ module.exports = function(webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: [
-                paths.appSrc,
-                path.resolve(__dirname, 'selenium'),
-              ],
+              include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
@@ -685,6 +682,13 @@ module.exports = function(webpackEnv) {
           : undefined
         )
       ),
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: './src/selenium/content/global.js', to: './' },
+          { from: './src/selenium/selenium-core-scripts/selenium-browserdetect.js', to: './' },
+          { from: './src/manifest.json', to: './' },
+        ]
+      }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358

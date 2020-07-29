@@ -1,9 +1,6 @@
 import browser from 'webextension-polyfill';
-import Selenium from './selenium-ide/content/selenium-api.js';
 
 console.log('Listening to commands...');
-
-const selenium = new Selenium.createForWindow(window, true);
 
 const getElementByXPATH = (query) => {
   const result = document.evaluate(
@@ -64,10 +61,12 @@ const extractTitle = ({ parameters }) => {
 };
 
 const doClick = ({ parameters }) => {
+
   const locator = parameters['LOCATOR'];
-  const encoded = encodeLocator(locator);
-  console.log('ENCODED!', encoded);
-  return selenium.doClick(encoded);
+  const element = getElement(locator);
+
+  return element.click()
+
 };
 
 const makeResponse      = (payload) => ({ type: 'SUCCESS', payload });

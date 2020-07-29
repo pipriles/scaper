@@ -1,6 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Instructions
+
+Run with `NODE_ENV=development npx webpack`
+
 ## Notes
+
+- Error cannot resolved module `closure-loader` solved by installing with version "^9.0.2"
+- Need to solve `Cannot read property 'findElement' of undefined` when using functions from selenium api
+- Decided to not use code from selenium ide because required a lot of effort to understand how it is integrated
 
 Steps represent the order of execution
 
