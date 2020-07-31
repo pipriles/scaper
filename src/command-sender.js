@@ -12,6 +12,20 @@ export const sendCommand = async (command) => {
   });
 };
 
+export const waitPageLoad = (tab) => {
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(async () => {
+      const updated = await browser.tabs.get(tab.id);
+      console.log(updated.status);
+      if (updated.status === 'complete') {
+        resolve(updated);
+        clearInterval(interval);
+      }
+      /* reject after timeout? */
+    }, 100);
+  });
+};
+
 export const runCommands = async (commands) => {
 
   const { activeTab } = store.getState();
@@ -19,14 +33,11 @@ export const runCommands = async (commands) => {
   for (const cmd of commands) {
     console.log(cmd);
 
-    let tab = await browser.tabs.get(activeTab.id);
-    console.log('BEFORE', tab.status);
+    let tab = await waitPageLoad(activeTab);
 
     // Wait until it is ready
     const resp = await sendCommand(cmd);
-
-    tab = await browser.tabs.get(activeTab.id);
-    console.log('AFTER', tab.status);
+    console.log(resp);
 
     /* Store command results on an intermediate area */ 
   }
