@@ -70,42 +70,42 @@ Run with `NODE_ENV=development npx webpack`
 
 ## TODO
 
-- [x] Implement EXTRACT_TEXT command
-- [x] Implement EXTRACT_ATTRIBUTE command
+- [x] Implement `EXTRACT_TEXT` command
+- [x] Implement `EXTRACT_ATTRIBUTE` command
 - [ ] Improve webpack config file
 - [ ] Remove Selenium API dependencies and code included to simplify project
 - [ ] Add recipe to Redux state
 - [ ] Create default test recipe
-- [ ] Implement EXTRACT_URL command
-- [ ] Implement EXTRACT_TITLE command
-- [ ] Implement WAIT_FOR_ELEMENT_PRESENT command
-- [ ] Implement WAIT_FOR_ELEMENT_NOT_PRESENT command
-- [ ] Implement WAIT_FOR_ELEMENT_VISIBLE command
-- [ ] Implement WAIT_FOR_ELEMENT_NOT_VISIBLE command
-- [ ] Implement WAIT_FOR_ELEMENT_EDITABLE command
-- [ ] Implement WAIT_FOR_ELEMENT_NOT_EDITABLE command
-- [ ] Implement PAGE_WAIT command
-- [ ] Implement CLICK command
-- [ ] Implement DOUBLE_CLICK command
-- [ ] Implement CLICK_AT command
-- [ ] Implement DOUBLE_CLICK_AT command
-- [ ] Implement FOCUS command
-- [ ] Implement MOUSE_OVER command
-- [ ] Implement MOUSE_OUT command
-- [ ] Implement MOUSE_DOWN command
-- [ ] Implement MOUSE_DOWN_RIGHT command
-- [ ] Implement MOUSE_DOWN_AT command
-- [ ] Implement MOUSE_DOWN_RIGHT_AT command
-- [ ] Implement MOUSE_UP command
-- [ ] Implement MOUSE_UP_RIGHT command
-- [ ] Implement MOUSE_UP_AT command
-- [ ] Implement MOUSE_UP_RIGHT_AT command
-- [ ] Implement MOUSE_MOVE command
-- [ ] Implement MOUSE_MOVE_AT command
-- [ ] Implement TYPE command
-- [ ] Implement SEND_KEYS command
-- [ ] Implement CHECK command
-- [ ] Implement UNCHECK command
-- [ ] Implement SUBMIT command
-- [ ] Implement OPEN command
+- [ ] Implement `EXTRACT_URL` command
+- [ ] Implement `EXTRACT_TITLE` command
+- [ ] Implement `WAIT_FOR_ELEMENT_PRESENT` command
+- [ ] Implement `WAIT_FOR_ELEMENT_NOT_PRESENT` command
+- [ ] Implement `WAIT_FOR_ELEMENT_VISIBLE` command
+- [ ] Implement `WAIT_FOR_ELEMENT_NOT_VISIBLE` command
+- [ ] Implement `WAIT_FOR_ELEMENT_EDITABLE` command
+- [ ] Implement `WAIT_FOR_ELEMENT_NOT_EDITABLE` command
+- [ ] Implement `PAGE_WAIT` command
+- [ ] Implement `CLICK` command
+- [ ] Implement `DOUBLE_CLICK` command
+- [ ] Implement `CLICK_AT` command
+- [ ] Implement `DOUBLE_CLICK_AT` command
+- [ ] Implement `FOCUS` command
+- [ ] Implement `MOUSE_OVER` command
+- [ ] Implement `MOUSE_OUT` command
+- [ ] Implement `MOUSE_DOWN` command
+- [ ] Implement `MOUSE_DOWN_RIGHT` command
+- [ ] Implement `MOUSE_DOWN_AT` command
+- [ ] Implement `MOUSE_DOWN_RIGHT_AT` command
+- [ ] Implement `MOUSE_UP` command
+- [ ] Implement `MOUSE_UP_RIGHT` command
+- [ ] Implement `MOUSE_UP_AT` command
+- [ ] Implement `MOUSE_UP_RIGHT_AT` command
+- [ ] Implement `MOUSE_MOVE` command
+- [ ] Implement `MOUSE_MOVE_AT` command
+- [ ] Implement `TYPE` command
+- [ ] Implement `SEND_KEYS` command
+- [ ] Implement `CHECK` command
+- [ ] Implement `UNCHECK` command
+- [ ] Implement `SUBMIT` command
+- [ ] Implement `OPEN` command
 
