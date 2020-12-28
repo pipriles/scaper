@@ -12,10 +12,11 @@ export const sendCommand = async (command) => {
   });
 };
 
-export const waitPageLoad = (tab) => {
+export const waitPageLoad = () => {
   return new Promise((resolve, reject) => {
     const interval = setInterval(async () => {
-      const updated = await browser.tabs.get(tab.id);
+      const { activeTab } = store.getState();
+      const updated = await browser.tabs.get(activeTab.id);
       console.log(updated.status);
       if (updated.status === 'complete') {
         resolve(updated);
@@ -28,12 +29,10 @@ export const waitPageLoad = (tab) => {
 
 export const runCommands = async (commands) => {
 
-  const { activeTab } = store.getState();
-
   for (const cmd of commands) {
     console.log(cmd);
 
-    let tab = await waitPageLoad(activeTab);
+    await waitPageLoad();
 
     // Wait until it is ready
     const resp = await sendCommand(cmd);
@@ -50,3 +49,8 @@ const sendMessageActiveTab = async (payload) => {
   return await browser.tabs.sendMessage(activeTab.id, payload);
 }
 
+browser.runtime.onMessage.addListener(
+  (request, sender, sendRequest) => {
+    console.log('Message received!', request, sender);
+  }
+);

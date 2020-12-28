@@ -28,10 +28,12 @@ const encodeLocator = locator => {
   return !query ? null : prefix + query;
 };
 
-const extractText = ({ parameters }) => {
+const extractText = async ({ parameters }) => {
 
   const locator = parameters['LOCATOR'];
   const element = getElement(locator);
+
+  if (!element) return null;
 
   const stripText = parameters['STRIP'];
   const string    = element.textContent;
@@ -40,7 +42,7 @@ const extractText = ({ parameters }) => {
 
 };
 
-const extractAttribute = ({ parameters }) => {
+const extractAttribute = async ({ parameters }) => {
 
   const locator = parameters['LOCATOR'];
   const element = getElement(locator);
@@ -52,35 +54,87 @@ const extractAttribute = ({ parameters }) => {
   return attribute && stripText ? attribute.trim() : attribute;
 }
 
-const extractUrl = ({ parameters }) => {
+const extractUrl = async ({ parameters }) => {
   return window.location.href;
 };
 
-const extractTitle = ({ parameters }) => {
+const extractTitle = async ({ parameters }) => {
   return document.title;
 };
 
-const doClick = ({ parameters }) => {
+const doClick = async ({ parameters }) => {
 
   const locator = parameters['LOCATOR'];
   const element = getElement(locator);
 
-  return element.click()
+  if (!element) return;
 
+  return element.click()
+};
+
+const waitForElementPresent = async ({ parameters }) => {
+
+  const locator = parameters['LOCATOR'];
+  const timeout = parameters['TIMEOUT'];
+  const dtStart = Date.now();
+
+  while (!getElement(locator)) {
+    if (Date.now() - dtStart > timeout ) return false;
+    await new Promise( resolve => requestAnimationFrame(resolve) ); 
+  }
+
+  return true;
+};
+
+const waitForElementNotPresent = async ({ parameters }) => {
+
+  const locator = parameters['LOCATOR'];
+  const timeout = parameters['TIMEOUT'];
+  const dtStart = Date.now();
+
+  while (getElement(locator)) {
+    if (Date.now() - dtStart > timeout ) return false;
+  }
+
+  return true;
+};
+
+const sendKeys = async ({ parameters }) => {
+
+  const locator = parameters['LOCATOR'];
+  const string  = parameters['TEXT'];
+  const element = getElement(locator);
+
+  if (!element) return false;
+
+  for(let i=0; i < string.length; i++) {
+    console.log(string[i]);
+
+    const keydown = new KeyboardEvent('keydown', { 'key': string[i] });
+    element.dispatchEvent(keydown);
+    
+    const keyup = new KeyboardEvent('keyup', { 'key': string[i] });
+    element.dispatchEvent(keyup);
+  }
+
+  return true
 };
 
 const makeResponse      = (payload) => ({ type: 'SUCCESS', payload });
 const makeErrorResponse = (payload) => ({ type: 'ERROR'  , payload });
 
 const commandExecutorMap = {
-  'EXTRACT_TEXT':       extractText,
-  'EXTRACT_ATTRIBUTE':  extractAttribute,
-  'EXTRACT_URL':        extractUrl,
-  'EXTRACT_TITLE':      extractTitle,
-  'CLICK':              doClick
+  'EXTRACT_TEXT':                 extractText,
+  'EXTRACT_ATTRIBUTE':            extractAttribute,
+  'EXTRACT_URL':                  extractUrl,
+  'EXTRACT_TITLE':                extractTitle,
+  'WAIT_FOR_ELEMENT_PRESENT':     waitForElementPresent,
+  'WAIT_FOR_ELEMENT_NOT_PRESENT': waitForElementNotPresent,
+  'CLICK':                        doClick,
+  'SEND_KEYS':                    sendKeys
 };
 
-const executeCommand = (command) => {
+const executeCommand = async (command) => {
 
   console.log(command);
   const action = commandExecutorMap[command.commandType];
@@ -90,15 +144,19 @@ const executeCommand = (command) => {
     return makeErrorResponse(payload);
   }
 
-  const payload = action(command);
-  return makeResponse(payload);
+  return action(command)
+    .then(makeResponse)
+    .catch(makeErrorResponse);
 
+  // const payload = await action(command);
+  // return makeResponse(payload);
 };
 
-const handleMessage = (message) => {
+const handleMessage = async (message, sendResponse) => {
   switch (message.type) {
     case 'COMMAND':
-      return executeCommand(message.payload);
+      let response = await executeCommand(message.payload);
+      sendResponse(response);
     default:
       return null;
   }
@@ -107,10 +165,8 @@ const handleMessage = (message) => {
 browser.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     const url = window.location.href;
-    const response = handleMessage(request);
-    console.log(response);
     console.log(request, sender, url);
-    sendResponse(response);
+    handleMessage(request, sendResponse);
     return true;
   }
 );
