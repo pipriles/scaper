@@ -79,7 +79,8 @@ const waitForElementPresent = async ({ parameters }) => {
   const dtStart = Date.now();
 
   while (!getElement(locator)) {
-    if (Date.now() - dtStart > timeout ) return false;
+    if (Date.now() - dtStart > timeout ) 
+      throw new Error('Timeout exceeded!');
     await new Promise( resolve => requestAnimationFrame(resolve) ); 
   }
 
@@ -93,7 +94,9 @@ const waitForElementNotPresent = async ({ parameters }) => {
   const dtStart = Date.now();
 
   while (getElement(locator)) {
-    if (Date.now() - dtStart > timeout ) return false;
+    if (Date.now() - dtStart > timeout ) 
+      throw new Error('Timeout exceeded!');
+    await new Promise( resolve => requestAnimationFrame(resolve) ); 
   }
 
   return true;
@@ -146,7 +149,10 @@ const executeCommand = async (command) => {
 
   return action(command)
     .then(makeResponse)
-    .catch(makeErrorResponse);
+    .catch((e) => {
+      const payload = { 'message': e.message }
+      return makeErrorResponse(payload)
+    });
 
   // const payload = await action(command);
   // return makeResponse(payload);
