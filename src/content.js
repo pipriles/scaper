@@ -110,14 +110,23 @@ const sendKeys = async ({ parameters }) => {
 
   if (!element) return false;
 
+  element.scrollIntoView();
+  element.focus();
+
+  if (element.tagName !== 'INPUT')
+    throw new Error('Element is not an INPUT tag');
+
   for(let i=0; i < string.length; i++) {
     console.log(string[i]);
 
-    const keydown = new KeyboardEvent('keydown', { 'key': string[i] });
+    const keydown = new KeyboardEvent('keypress', { 'key': string[i] });
     element.dispatchEvent(keydown);
-    
-    const keyup = new KeyboardEvent('keyup', { 'key': string[i] });
-    element.dispatchEvent(keyup);
+
+    // edit input and trigger input event
+    element.value += string[i];
+
+    const input = new Event('input', { bubbles: true, cancelable: true, });
+    element.dispatchEvent(input);
   }
 
   return true
@@ -135,6 +144,7 @@ const commandExecutorMap = {
   'WAIT_FOR_ELEMENT_NOT_PRESENT': waitForElementNotPresent,
   'CLICK':                        doClick,
   'SEND_KEYS':                    sendKeys
+  // 'CLEAR_INPUT' clear input value
 };
 
 const executeCommand = async (command) => {
